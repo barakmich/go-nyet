@@ -1,5 +1,5 @@
 "============================================================================
-"File:        go-nyet.vim
+"File:        gonyet.vim
 "Description: Perform static analysis of Go code with the go-nyet tool
 "Maintainer:  Barak Michener <me@barakmich.com>
 "License:     This program is free software. It comes without any warranty,
@@ -23,7 +23,7 @@ function! SyntaxCheckers_go_gonyet_IsAvailable() dict
 endfunction
 
 function! SyntaxCheckers_go_gonyet_GetLocList() dict
-    let makeprg = 'go-nyet ' . expand('%:p:h') . '/'
+    let makeprg = 'go-nyet ' . expand('%:p')
     let errorformat = '%f:%l:%c:%m' 
 
     " The go compiler needs to either be run with an import path as an
@@ -41,7 +41,7 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'go',
-    \ 'name': 'go-nyet'})
+    \ 'name': 'gonyet'})
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
