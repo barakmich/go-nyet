@@ -19,14 +19,17 @@ go get github.com/barakmich/go-nyet
 
 And run
 
-```
-go-nyet ./
-go-nyet ./subpackage
+```bash
+go-nyet ./...
+# or
+go-nyet subpackage
+# or
+go-nyet file.go
 ```
 
 In the root of your project. If it complains about packages, you may need to `go install` them first.
 
-Still working out the kinks, and eventually fixing `./...` like most tools, but give it a shot.
+Still working out the kinks, but give it a shot.
 
 ## License
 
