@@ -43,6 +43,7 @@ func recMain(s string) {
 	if hasErrors {
 		os.Exit(1)
 	}
+	os.Exit(0)
 }
 
 func main() {
@@ -146,7 +147,10 @@ func doPackage(directory string, names []string, singlefile string) {
 	config := new(types.Config)
 	_, err := config.Check(pkg.path, fs, astFiles, &info)
 	if err != nil {
-		fmt.Println("Error package checker:", err)
+		if *debug {
+			fmt.Println("Error package checker:", err)
+		}
+
 	}
 	for _, file := range pkg.files {
 		if singlefile != "" {
