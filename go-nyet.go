@@ -19,6 +19,7 @@ import (
 )
 
 var debug = flag.Bool("debug", false, "Enable debug printing.")
+var exitWith = flag.Int("exitWith", 1, "Error code to exit with, if there are errors")
 var hasErrors = false
 
 type fileMetadata struct {
@@ -33,11 +34,11 @@ func recMain(s string) {
 	st, err := os.Stat(dir)
 	if err != nil {
 		fmt.Println("Error:", err)
-		os.Exit(1)
+		os.Exit(*exitWith)
 	}
 	if !st.IsDir() {
 		fmt.Println("Non-directory ending in ...")
-		os.Exit(1)
+		os.Exit(*exitWith)
 	}
 	dirRec(dir)
 }
@@ -46,7 +47,7 @@ func main() {
 	flag.Parse()
 	if len(flag.Args()) < 1 {
 		fmt.Println("No path given")
-		os.Exit(1)
+		os.Exit(*exitWith)
 	}
 	for _, arg := range flag.Args() {
 		if strings.HasSuffix(arg, "...") {
@@ -56,7 +57,7 @@ func main() {
 		st, err := os.Stat(arg)
 		if err != nil {
 			fmt.Println("Error:", err)
-			os.Exit(1)
+			os.Exit(*exitWith)
 		}
 		if st.IsDir() {
 			doPackageDir(arg, "")
@@ -66,7 +67,7 @@ func main() {
 		}
 	}
 	if hasErrors {
-		os.Exit(1)
+		os.Exit(*exitWith)
 	}
 }
 
