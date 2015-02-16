@@ -112,8 +112,6 @@ func updateOrFailFromStatement(info fileMetadata, st ast.Stmt, localScope map[st
 					localScope[varname.Name] = true
 				}
 			}
-		} else {
-			fmt.Printf("%s:Odd decl (const, import, or type) in body\n", info.fset.Position(decl.Pos()))
 		}
 		// Things which may recurse
 	case *ast.BlockStmt:
