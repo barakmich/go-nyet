@@ -109,7 +109,9 @@ func updateOrFailFromStatement(info fileMetadata, st ast.Stmt, localScope map[st
 						fmt.Printf("%s:Shadowing variable `%s`\n", pos, varname.Name)
 						hasErrors = true
 					}
-					localScope[varname.Name] = true
+					if varname.Name != "_" {
+						localScope[varname.Name] = true
+					}
 				}
 			}
 		}
