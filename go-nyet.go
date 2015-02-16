@@ -40,10 +40,6 @@ func recMain(s string) {
 		os.Exit(1)
 	}
 	dirRec(dir)
-	if hasErrors {
-		os.Exit(1)
-	}
-	os.Exit(0)
 }
 
 func main() {
@@ -52,20 +48,22 @@ func main() {
 		fmt.Println("No path given")
 		os.Exit(1)
 	}
-
-	if strings.HasSuffix(flag.Arg(0), "...") {
-		recMain(flag.Arg(0))
-	}
-	st, err := os.Stat(flag.Arg(0))
-	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
-	}
-	if st.IsDir() {
-		doPackageDir(flag.Arg(0), "")
-	} else {
-		abs, _ := filepath.Abs(flag.Arg(0))
-		doPackageDir(filepath.Dir(flag.Arg(0)), abs)
+	for _, arg := range flag.Args() {
+		if strings.HasSuffix(arg, "...") {
+			recMain(arg)
+			continue
+		}
+		st, err := os.Stat(arg)
+		if err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
+		}
+		if st.IsDir() {
+			doPackageDir(arg, "")
+		} else {
+			abs, _ := filepath.Abs(arg)
+			doPackageDir(filepath.Dir(arg), abs)
+		}
 	}
 	if hasErrors {
 		os.Exit(1)
