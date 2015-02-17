@@ -115,6 +115,9 @@ type packageMetadata struct {
 func doPackage(directory string, names []string, singlefile string) {
 	var files []*fileMetadata
 	var astFiles []*ast.File
+	if *debug {
+		fmt.Println("Checking directory", directory, "...")
+	}
 	fs := token.NewFileSet()
 	for _, name := range names {
 		data, err := ioutil.ReadFile(name)
@@ -160,6 +163,7 @@ func doPackage(directory string, names []string, singlefile string) {
 		}
 		file.info = &info
 		CheckNoShadow(*file, file.file)
+		CheckNoAssignUnused(*file, file.file)
 	}
 }
 

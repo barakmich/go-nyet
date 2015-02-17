@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"go/ast"
 	"go/token"
-	_ "path"
 	"strings"
 
-	_ "golang.org/x/tools/go/gcimporter"
 	"reflect"
 )
 
@@ -182,6 +180,7 @@ func updateOrFailFromStatement(info fileMetadata, st ast.Stmt, localScope map[st
 	case *ast.IncDecStmt:
 	case *ast.ReturnStmt:
 	case *ast.LabeledStmt:
+		updateOrFailFromStatement(info, v.Stmt, localScope)
 	case *ast.BranchStmt:
 	case *ast.EmptyStmt:
 	case *ast.SendStmt:
