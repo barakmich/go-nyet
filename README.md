@@ -9,6 +9,19 @@ I've been bitten by too many bugs caused by the shadowing of Go variables within
 
 It checks for shadowed variables anywhere they appear in the code. Helpfully, it also type checks these variables and ignores anything of type `error`. This is because it's very common practice to shadow `err` and, well, shadowing `error` typed things hasn't hurt me nearly as much in the past.
 
+It also checks for clobbering of variables that occur that aren't technically shadows. Eg:
+```go
+package main
+
+import "os"
+
+func main() {
+    f, err := os.Open("")
+    f, err = os.Open("")
+    println(f, err)
+}
+```
+
 Other aggressive checks may come in the future.
 
 ## How do I get it?
