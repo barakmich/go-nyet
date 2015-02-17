@@ -98,10 +98,14 @@ func lhsForExpr(info fileMetadata, exp ast.Expr, tok token.Token, scope map[stri
 		name = expv.Name
 		pos = expv.Pos()
 	case *ast.StarExpr:
-		if x, ok := expv.X.(*ast.SelectorExpr); ok {
+		switch x := expv.X.(type) {
+		case *ast.SelectorExpr:
 			name = x.Sel.String()
 			pos = expv.Pos()
-		} else {
+		case *ast.Ident:
+			name = x.Name
+			pos = expv.Pos()
+		default:
 			cpos := info.fset.Position(expv.Pos())
 			fmt.Printf("%s:Weird type of StarExpr: %s\n", cpos, reflect.TypeOf(expv.X))
 			return
