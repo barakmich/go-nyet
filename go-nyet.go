@@ -13,9 +13,10 @@ import (
 
 	"flag"
 
+	"os"
+
 	_ "golang.org/x/tools/go/gcimporter"
 	"golang.org/x/tools/go/types"
-	"os"
 )
 
 var debug = flag.Bool("debug", false, "Enable debug printing.")
@@ -88,7 +89,7 @@ func doPackageDir(directory string, file string) {
 			return
 		}
 		// Non-fatal: we are doing a recursive walk and there may be other directories.
-		fmt.Printf("cannot process directory %s: %s\n", directory, err)
+		fmt.Fprintf(os.Stderr, "cannot process directory %s: %s\n", directory, err)
 		return
 	}
 	var names []string
