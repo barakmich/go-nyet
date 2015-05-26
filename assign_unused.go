@@ -264,8 +264,8 @@ func noAssignStatement(info fileMetadata, st ast.Stmt, localScope map[string]var
 	}
 }
 
-func CheckNoAssignUnused(info fileMetadata, file *ast.File) {
-	for _, obj := range file.Scope.Objects {
+func CheckNoAssignUnused(info fileMetadata) {
+	for _, obj := range info.f.Scope.Objects {
 		funcScope := make(map[string]varUsage)
 		if obj.Kind == ast.Fun {
 			decl := obj.Decl.(*ast.FuncDecl)
