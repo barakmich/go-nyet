@@ -1,21 +1,20 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"go/ast"
 	"go/build"
 	"go/parser"
 	"go/token"
 	"io/ioutil"
+	"os"
 	_ "path"
 	"path/filepath"
 	"strings"
 
-	"flag"
-
 	_ "golang.org/x/tools/go/gcimporter"
 	"golang.org/x/tools/go/types"
-	"os"
 )
 
 var debug = flag.Bool("debug", false, "Enable debug printing.")
@@ -120,6 +119,9 @@ func doPackage(directory string, names []string, singlefile string) {
 	}
 	fs := token.NewFileSet()
 	for _, name := range names {
+		if *debug {
+			fmt.Println("Checking file", name, "...")
+		}
 		data, err := ioutil.ReadFile(name)
 		if err != nil {
 			// Warn but continue to next package.
