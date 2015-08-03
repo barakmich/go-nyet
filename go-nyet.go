@@ -88,7 +88,9 @@ func doFiles(filenames ...string) {
 	for _, filename := range filenames {
 		src, err := ioutil.ReadFile(filename)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
+			if *debug {
+				fmt.Fprintln(os.Stderr, err)
+			}
 			continue
 		}
 		files[filename] = src
