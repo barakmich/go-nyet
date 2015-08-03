@@ -103,6 +103,9 @@ func doFiles(filenames ...string) {
 	}
 	var pkgName string
 	for filename, src := range files {
+		if *debug {
+			fmt.Println("Checking file", filename, "...")
+		}
 		f, err := parser.ParseFile(pkg.fset, filename, src, parser.ParseComments)
 		if err != nil {
 			fmt.Printf("%s: %s\n", filename, err)
