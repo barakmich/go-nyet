@@ -7,12 +7,11 @@ import (
 	"go/build"
 	"go/parser"
 	"go/token"
+	"go/types"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"golang.org/x/tools/go/types"
 )
 
 var debug = flag.Bool("debug", false, "Enable debug printing.")
